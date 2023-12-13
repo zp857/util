@@ -20,7 +20,7 @@ type HTTPClient struct {
 
 func NewHTTPClient(reqClient *req.Client, url string, statusDebugPrint bool, ignoreApiList []string) *HTTPClient {
 	return &HTTPClient{
-		logger:             zap.L().Named("[http-client]").Sugar(),
+		logger:             zap.L().Named(LoggerName).Sugar(),
 		reqClient:          reqClient,
 		baseUrl:            url,
 		noStatusDebugPrint: !statusDebugPrint,
@@ -34,6 +34,15 @@ type Response struct {
 	Data    interface{} `json:"data"`
 }
 
+const (
+	LoggerName = "[http-client]"
+
+	RequestErr = "request err: %v"
+
+	RequestDumpFormat  = "request: [%v]\n%v"
+	ResponseDumpFormat = "response: [%v]\n%v"
+)
+
 func (c *HTTPClient) SendWithResponse(api string, code int, data interface{}, msg string) {
 	r := c.reqClient.R()
 	body := Response{
@@ -44,7 +53,7 @@ func (c *HTTPClient) SendWithResponse(api string, code int, data interface{}, ms
 	r.SetBody(body)
 	resp, err := r.Post(c.baseUrl + api)
 	if err != nil {
-		c.logger.Errorf("request err: %v", err)
+		c.logger.Errorf(RequestErr, err)
 		return
 	}
 	if c.noStatusDebugPrint {
@@ -52,8 +61,8 @@ func (c *HTTPClient) SendWithResponse(api string, code int, data interface{}, ms
 			return
 		}
 	}
-	c.logger.Infof("request: [%v]\n%v", api, structutil.JsonMarshalIndent(data))
-	c.logger.Infof("response: [%v]\n%v", resp.StatusCode, structutil.JsonMarshalIndent(maputil.BytesToMap(resp.Bytes())))
+	c.logger.Infof(RequestDumpFormat, api, structutil.JsonMarshalIndent(data))
+	c.logger.Infof(ResponseDumpFormat, resp.StatusCode, structutil.JsonMarshalIndent(maputil.BytesToMap(resp.Bytes())))
 	return
 }
 
@@ -77,7 +86,7 @@ func (c *HTTPClient) SendJson(api string, data interface{}) {
 	r.SetBody(data)
 	resp, err := r.Post(c.baseUrl + api)
 	if err != nil {
-		c.logger.Errorf("request err: %v", err)
+		c.logger.Errorf(RequestErr, err)
 		return
 	}
 	if c.noStatusDebugPrint {
@@ -85,7 +94,7 @@ func (c *HTTPClient) SendJson(api string, data interface{}) {
 			return
 		}
 	}
-	c.logger.Infof("request: [%v]\n%v", api, structutil.JsonMarshalIndent(data))
-	c.logger.Infof("response: [%v]\n%v", resp.StatusCode, structutil.JsonMarshalIndent(maputil.BytesToMap(resp.Bytes())))
+	c.logger.Infof(RequestDumpFormat, api, structutil.JsonMarshalIndent(data))
+	c.logger.Infof(ResponseDumpFormat, resp.StatusCode, structutil.JsonMarshalIndent(maputil.BytesToMap(resp.Bytes())))
 	return
 }

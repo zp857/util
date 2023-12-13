@@ -13,14 +13,19 @@ type Options struct {
 	Headers []string `yaml:"headers" json:"headers"`
 }
 
+const (
+	defaultUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36"
+	cookieHeader     = "cookie"
+)
+
 func NewReqClient(options *Options) *req.Client {
 	reqClient := req.C().EnableDumpEachRequest()
 	reqClient.GetTLSClientConfig().InsecureSkipVerify = true
 	reqClient.SetCommonHeaders(map[string]string{
-		"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
+		"User-Agent": defaultUserAgent,
 	})
 	reqClient.GetTLSClientConfig().MinVersion = tls.VersionTLS10
-	reqClient.SetRedirectPolicy(req.AlwaysCopyHeaderRedirectPolicy("Cookie"))
+	reqClient.SetRedirectPolicy(req.AlwaysCopyHeaderRedirectPolicy(cookieHeader))
 	if options.Proxy != "" {
 		reqClient.SetProxyURL(options.Proxy)
 	}

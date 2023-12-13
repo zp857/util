@@ -14,13 +14,17 @@ type Response struct {
 	Data    interface{} `json:"data"`
 }
 
+const (
+	DumpFormat = "response:\n%v"
+)
+
 func Result(code int, data interface{}, msg string, c *gin.Context) {
 	response := Response{
 		Code:    code,
 		Message: msg,
 		Data:    data,
 	}
-	zap.L().Named("[gin]").Sugar().Infof("response:\n%v", structutil.JsonMarshalIndent(response))
+	zap.L().Named("[gin]").Sugar().Infof(DumpFormat, structutil.JsonMarshalIndent(response))
 	c.JSON(http.StatusOK, response)
 }
 
