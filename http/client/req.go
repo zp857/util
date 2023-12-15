@@ -46,3 +46,55 @@ func NewReqClient(options *Options) *req.Client {
 	}
 	return reqClient
 }
+
+var (
+	toHttps = []string{
+		"sent to HTTPS port",
+		"This combination of host and port requires TLS",
+		"Instead use the HTTPS scheme to",
+		"This web server is running in SSL mode",
+	}
+)
+
+func FirstGet(client *req.Client, url string) (resp *req.Response, err error) {
+	request := client.R()
+	var scheme string
+	var flag bool
+	if !strings.HasPrefix(url, "http") {
+		scheme = "http://"
+		resp, err = request.Get(scheme + url)
+		if err != nil {
+			scheme = "https://"
+			flag = true
+		} else {
+			for _, str := range toHttps {
+				if strings.Contains(resp.String(), str) {
+					scheme = "https://"
+					flag = true
+					break
+				}
+			}
+		}
+	} else if strings.HasPrefix(url, "http://") {
+		resp, err = request.Get(url)
+		if err != nil {
+			scheme = "https://"
+			url = url[7:]
+			flag = true
+		} else {
+			for _, str := range toHttps {
+				if strings.Contains(resp.String(), str) {
+					scheme = "https://"
+					url = url[7:]
+					flag = true
+				}
+			}
+		}
+	} else {
+		flag = true
+	}
+	if flag {
+		resp, err = request.Get(scheme + url)
+	}
+	return
+}
