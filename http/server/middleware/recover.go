@@ -11,7 +11,12 @@ import (
 	"strings"
 )
 
-func GinRecovery(logger *zap.SugaredLogger, debug bool) gin.HandlerFunc {
+const (
+	debugTemplate = "[Recovery from panic] error %v\nrequest %v\nstack %v"
+	template      = "[Recovery from panic] error %v\nrequest %v\n"
+)
+
+func GinRecovery(logger *zap.SugaredLogger, debug bool, skip int) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
@@ -38,10 +43,10 @@ func GinRecovery(logger *zap.SugaredLogger, debug bool) gin.HandlerFunc {
 					return
 				}
 				if debug {
-					stackBytes := stack.GetStack(3)
-					logger.Errorf("[Recovery from panic] error %v\nrequest %v\nstack %v", err, string(httpRequest), string(stackBytes))
+					stackBytes := stack.GetStack(skip)
+					logger.Errorf(debugTemplate, err, string(httpRequest), string(stackBytes))
 				} else {
-					logger.Errorf("[Recovery from panic] error %v\nrequest %v\n", err, string(httpRequest))
+					logger.Errorf(template, err, string(httpRequest))
 				}
 				c.AbortWithStatus(http.StatusInternalServerError)
 			}

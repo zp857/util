@@ -15,7 +15,7 @@ func GetAllIPsInSubnet(subnet, mask string) []net.IP {
 	return ipRange
 }
 
-// 递增IP地址
+// 递增 IP 地址
 func incIP(ip net.IP) {
 	for j := len(ip) - 1; j >= 0; j-- {
 		ip[j]++

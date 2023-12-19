@@ -101,8 +101,8 @@ func (g *Client) loginForSSL(domain, user, pwd string) error {
 		glog.Info("on ready")
 		g.pdu.Emit("done")
 	})
-	g.pdu.On("update", func(rectangles []pdu.BitmapData) {
-		glog.Info("on update:", rectangles)
+	g.pdu.On("updater", func(rectangles []pdu.BitmapData) {
+		glog.Info("on updater:", rectangles)
 	})
 	g.pdu.On("done", func() {
 		if breakFlag == false {
@@ -170,8 +170,8 @@ func (g *Client) loginForRDP(domain, user, pwd string) error {
 	g.pdu.On("ready", func() {
 		glog.Info("on ready")
 	})
-	g.pdu.On("update", func(rectangles []pdu.BitmapData) {
-		glog.Info("on update:", rectangles)
+	g.pdu.On("updater", func(rectangles []pdu.BitmapData) {
+		glog.Info("on updater:", rectangles)
 		updateCount += 1
 		//fmt.Println(updateCount," ",rectangles[0].BitmapLength)
 	})
@@ -200,7 +200,7 @@ func (g *Client) loginForRDP(domain, user, pwd string) error {
 func Login(target, domain, username, password string, timeout int) error {
 	var err error
 	g := NewClient(target, timeout, glog.NONE)
-	//SSL协议登录测试
+	//SSL 协议登录测试
 	err = g.loginForSSL(domain, username, password)
 	if err == nil {
 		return nil
@@ -208,7 +208,7 @@ func Login(target, domain, username, password string, timeout int) error {
 	if err.Error() != PROTOCOL_RDP {
 		return err
 	}
-	//RDP协议登录测试
+	//RDP 协议登录测试
 	err = g.loginForRDP(domain, username, password)
 	if err == nil {
 		return nil
