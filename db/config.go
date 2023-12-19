@@ -12,13 +12,13 @@ type GeneralDB struct {
 	DBName       string `yaml:"dbName" json:"dbName"`                  // 数据库名
 	Username     string `yaml:"username" json:"username"`              // 数据库用户名
 	Password     string `yaml:"password" json:"password"`              // 数据库密码
-	Prefix       string `yaml:"prefix" json:"prefix"`                  // 全局表前缀，单独定义TableName则不生效
-	Singular     bool   `yaml:"singular" json:"singular"`              // 是否开启全局禁用复数，true表示开启
-	Engine       string `yaml:"engine" json:"engine" default:"InnoDB"` // 数据库引擎，默认InnoDB
+	Prefix       string `yaml:"prefix" json:"prefix"`                  // 全局表前缀，单独定义 TableName 则不生效
+	Singular     bool   `yaml:"singular" json:"singular"`              // 是否开启全局禁用复数，true 表示开启
+	Engine       string `yaml:"engine" json:"engine" default:"InnoDB"` // 数据库引擎，默认 InnoDB
 	MaxIdleConns int    `yaml:"maxIdleConns" json:"maxIdleConns"`      // 空闲中的最大连接数
 	MaxOpenConns int    `yaml:"maxOpenConns" json:"maxOpenConns"`      // 打开到数据库的最大连接数
-	LogMode      string `yaml:"logMode" json:"logMode"`                // 是否开启Gorm全局日志
-	LogZap       bool   `yaml:"logZap" json:"logZap"`                  // 是否通过zap写入日志文件
+	LogMode      string `yaml:"logMode" json:"logMode"`                // 是否开启 Gorm 全局日志
+	LogZap       bool   `yaml:"logZap" json:"logZap"`                  // 是否通过 zap 写入日志文件
 }
 
 func (c *Config) GetLogMode() string {

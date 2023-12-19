@@ -61,7 +61,7 @@ func (p *Producer) SendJSON(topic string, obj any) {
 		return
 	}
 	if p.noStatusDebugPrint {
-		// 如果不是状态上报, 记录请求
+		// 如果不是状态上报，记录请求
 		if sliceutil.Contain(p.ignoreTopics, topic) {
 			return
 		}

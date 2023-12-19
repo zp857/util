@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// TelnetCli telnet连接结构体
+// TelnetCli telnet 连接结构体
 type TelnetCli struct {
 	client *telnet.Conn
 	user   string

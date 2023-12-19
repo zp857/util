@@ -9,7 +9,7 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-// SSHCli ssh连接结构体
+// SSHCli ssh 连接结构体
 type SSHCli struct {
 	client *goph.Client
 	ip     string

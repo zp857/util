@@ -27,7 +27,7 @@ func GetLookupIpFromUrL(rawUrl string) (ips []net.IP, err error) {
 	return ips, nil
 }
 
-// ExtractPortFromUrl 从url中提取port信息
+// ExtractPortFromUrl 从 url 中提取 port 信息
 func ExtractPortFromUrl(rawUrl string) (port string, err error) {
 	isIpv6 := isIPv6(rawUrl)
 	if isIpv6 {
@@ -39,7 +39,7 @@ func ExtractPortFromUrl(rawUrl string) (port string, err error) {
 	return port, nil
 }
 
-// 判断URL是否是ipv6
+// 判断 URL 是否是 ipv6
 func isIPv6(rawUrL string) bool {
 	trimUrl := strings.TrimPrefix(rawUrL, "http://")
 	trimUrl = strings.TrimPrefix(trimUrl, "https://")
@@ -54,7 +54,7 @@ func isIPv6(rawUrL string) bool {
 }
 
 func getPortFromIPv6(url string) (string, error) {
-	// 使用正则表达式从URL中提取端口号
+	// 使用正则表达式从 URL 中提取端口号
 	re := regexp.MustCompile(`]:(\d+)$`)
 	match := re.FindStringSubmatch(url)
 	if len(match) < 2 {
@@ -84,7 +84,6 @@ func getPortFromCommonUrl(rawUrl string) (string, error) {
 }
 
 func ValidInnerIp(ip string) bool {
-	//
 	validInnerIps := []string{
 		// 10.0.0.0/8
 		"10.0.0.0-10.255.255.255",

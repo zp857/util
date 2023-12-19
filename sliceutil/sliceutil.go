@@ -3,7 +3,6 @@ package sliceutil
 import (
 	"fmt"
 	"github.com/zp857/util/structutil"
-	"strings"
 )
 
 func Unique[T comparable](slice []T) []T {
@@ -34,14 +33,6 @@ func Contain[T comparable](slice []T, target T) bool {
 	}
 
 	return false
-}
-
-func SplitItems(itemString string) []string {
-	items := strings.Split(itemString, ",")
-	for i, item := range items {
-		items[i] = strings.TrimSpace(item)
-	}
-	return items
 }
 
 func Remove[T comparable](slice []T, target T) []T {

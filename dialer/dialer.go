@@ -4,7 +4,7 @@ import "time"
 
 // BaseCli 基础客户端机构体
 type BaseCli struct {
-	IP         string // IP地址
+	IP         string // IP 地址
 	Port       int    // 端口
 	User       string // 账号
 	Password   string // 密码

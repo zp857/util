@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 )
 
-// GetKeyFromMap golang通过map中的value获取key
+// GetKeyFromMap golang 通过 map 中的 value 获取 key
 func GetKeyFromMap(m map[string]string, value string) string {
 	for k, v := range m {
 		if v == value {
