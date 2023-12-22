@@ -80,3 +80,18 @@ func GetAllFile(dirPath string) (results []string, err error) {
 	})
 	return
 }
+
+// ReadLines 按行读取文件
+func ReadLines(filename string) ([]string, error) {
+	var lines []string
+	f, err := os.Open(filename)
+	if err != nil {
+		return lines, err
+	}
+	defer f.Close()
+	s := bufio.NewScanner(f)
+	for s.Scan() {
+		lines = append(lines, s.Text())
+	}
+	return lines, nil
+}
