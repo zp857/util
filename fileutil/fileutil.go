@@ -16,7 +16,7 @@ func PathExists(path string) bool {
 	return f.IsDir()
 }
 
-func IsFile(path string) (os.FileInfo, bool) {
+func FileExists(path string) (os.FileInfo, bool) {
 	f, flag := IsExists(path)
 	return f, flag && !f.IsDir()
 }
@@ -54,7 +54,7 @@ func WriteFile(filename string, data string) (err error) {
 }
 
 func WritePath(path string, data string) (err error) {
-	_, b := IsFile(path)
+	_, b := FileExists(path)
 	var f *os.File
 	if b {
 		f, err = os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
