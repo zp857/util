@@ -50,7 +50,7 @@ func DebugPrint[T comparable](slice []T) {
 	fmt.Printf("len => %v\n%v\n", len(slice), structutil.JsonMarshalIndent(slice))
 }
 
-func IsResultsEmpty(results interface{}) bool {
+func IsEmpty(results interface{}) bool {
 	v := reflect.ValueOf(results)
 	if v.Kind() != reflect.Slice {
 		// 不是切片类型
