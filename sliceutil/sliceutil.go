@@ -3,6 +3,7 @@ package sliceutil
 import (
 	"fmt"
 	"github.com/zp857/util/structutil"
+	"reflect"
 )
 
 func Unique[T comparable](slice []T) []T {
@@ -47,4 +48,13 @@ func Remove[T comparable](slice []T, target T) []T {
 
 func DebugPrint[T comparable](slice []T) {
 	fmt.Printf("len => %v\n%v\n", len(slice), structutil.JsonMarshalIndent(slice))
+}
+
+func IsResultsEmpty(results interface{}) bool {
+	v := reflect.ValueOf(results)
+	if v.Kind() != reflect.Slice {
+		// 不是切片类型
+		return true
+	}
+	return v.Len() == 0
 }
