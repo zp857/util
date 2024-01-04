@@ -57,7 +57,7 @@ func WriteFile(filename string, data string) (err error) {
 }
 
 func WritePath(path string, data string) (err error) {
-	_, b := FileExists(path)
+	b := FileExists(path)
 	var f *os.File
 	if b {
 		f, err = os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
