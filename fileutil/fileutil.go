@@ -16,9 +16,12 @@ func PathExists(path string) bool {
 	return f.IsDir()
 }
 
-func FileExists(path string) (os.FileInfo, bool) {
+func FileExists(path string) bool {
 	f, flag := IsExists(path)
-	return f, flag && !f.IsDir()
+	if !flag {
+		return false
+	}
+	return !f.IsDir()
 }
 
 func IsExists(path string) (os.FileInfo, bool) {
