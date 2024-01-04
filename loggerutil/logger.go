@@ -1,4 +1,4 @@
-package logger
+package loggerutil
 
 import (
 	"github.com/zp857/util/fileutil"

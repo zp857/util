@@ -1,4 +1,4 @@
-package logger
+package loggerutil
 
 // Config 配置
 type Config struct {
@@ -11,7 +11,7 @@ type Config struct {
 }
 
 var (
-	DefaultConfig = &Config{
+	DefaultConfig = Config{
 		Director:     "logs",
 		Format:       "console",
 		Level:        "debug",
