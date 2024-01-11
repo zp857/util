@@ -57,12 +57,12 @@ func WriteFile(filename string, data string) (err error) {
 }
 
 func WritePath(path string, data string) (err error) {
-	b := FileExists(path)
+	b := PathExists(path)
 	var f *os.File
 	if b {
-		f, err = os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+		f, err = os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0777)
 	} else {
-		err = os.MkdirAll(filepath.Dir(path), 0666)
+		err = os.MkdirAll(filepath.Dir(path), 0777)
 		if err != nil {
 			return
 		}
