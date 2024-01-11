@@ -62,7 +62,10 @@ func WritePath(path string, data string) (err error) {
 	if b {
 		f, err = os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
 	} else {
-		_ = os.MkdirAll(filepath.Dir(path), 0666)
+		err = os.MkdirAll(filepath.Dir(path), 0666)
+		if err != nil {
+			return
+		}
 		f, err = os.Create(path)
 	}
 	if err != nil {
