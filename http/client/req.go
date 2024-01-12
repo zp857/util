@@ -53,6 +53,7 @@ var (
 		"This combination of host and port requires TLS",
 		"Instead use the HTTPS scheme to",
 		"This web server is running in SSL mode",
+		"server gave HTTP response to HTTPS client",
 	}
 )
 
