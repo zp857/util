@@ -42,7 +42,7 @@ func WriteJSON(filename string, data interface{}) (err error) {
 
 // WriteFile 写入文件
 func WriteFile(filename string, data string) (err error) {
-	file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0666)
+	file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0777)
 	if err != nil {
 		return err
 	}

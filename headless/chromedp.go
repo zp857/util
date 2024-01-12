@@ -12,6 +12,7 @@ func NewChromedp(headless bool, proxy string) context.Context {
 		// 当然也可以根据自己的需要进行修改，这个 flag 是浏览器的设置
 		chromedp.DefaultExecAllocatorOptions[:],
 		chromedp.NoSandbox,
+		chromedp.Flag("disable-gpu", true),
 		chromedp.Flag("headless", headless), // 显示界面
 		chromedp.Flag("disable-web-security", true),
 		chromedp.Flag("ignore-certificate-errors", true),
