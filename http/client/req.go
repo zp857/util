@@ -8,6 +8,7 @@ import (
 )
 
 type Options struct {
+	DumpAll bool     `yaml:"dumpAll" json:"dumpAll"`
 	Proxy   string   `yaml:"proxy" json:"proxy"`
 	Timeout int      `yaml:"timeout" json:"timeout"`
 	Headers []string `yaml:"headers" json:"headers"`
@@ -20,6 +21,9 @@ const (
 
 func NewReqClient(options *Options) *req.Client {
 	reqClient := req.C().EnableDumpEachRequest()
+	if options.DumpAll {
+		reqClient.EnableDumpAll()
+	}
 	reqClient.GetTLSClientConfig().InsecureSkipVerify = true
 	reqClient.SetCommonHeaders(map[string]string{
 		"User-Agent": defaultUserAgent,
@@ -53,7 +57,6 @@ var (
 		"This combination of host and port requires TLS",
 		"Instead use the HTTPS scheme to",
 		"This web server is running in SSL mode",
-		"server gave HTTP response to HTTPS client",
 	}
 )
 
