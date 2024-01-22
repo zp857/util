@@ -35,6 +35,7 @@ func GetFileWithoutExt(link string) string {
 	if err != nil {
 		return ""
 	}
+	u.RawQuery = ""
 	file := filepath.Base(u.Path)
 	ext := filepath.Ext(file)
 	file = strings.TrimSuffix(file, ext)
@@ -46,5 +47,8 @@ func GetFileExt(link string) string {
 	if err != nil {
 		return ""
 	}
-	return filepath.Ext(u.Path)
+	u.RawQuery = ""
+	ext := filepath.Ext(u.Path)
+	ext = strings.ToLower(ext)
+	return ext
 }
