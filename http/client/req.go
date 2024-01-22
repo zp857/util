@@ -24,6 +24,7 @@ func NewReqClient(options *Options) *req.Client {
 	if options.DumpAll {
 		reqClient.EnableDumpAll()
 	}
+	reqClient.ImpersonateChrome()
 	reqClient.GetTLSClientConfig().InsecureSkipVerify = true
 	reqClient.SetCommonHeaders(map[string]string{
 		"User-Agent": defaultUserAgent,
